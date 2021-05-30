@@ -1,0 +1,275 @@
+#Main Interface
+CanvasExample7:
+
+<CanvasExample7>:
+#no need to indicate widget: and position if using RelativeLayout:
+    RelativeLayout:
+        canvas:
+            Color:
+                rgb: 0, 0, 1
+            Rectangle:
+                size: self.size
+    RelativeLayout:
+        canvas:
+            Color:
+                rgb: 1, 1, 1
+            Rectangle:
+                size: self.size
+    RelativeLayout:
+        canvas:
+            Color:
+                rgb: 1, 0, 0
+            Rectangle:
+                size: self.size
+
+
+
+<CanvasExample6>:
+    #canvas and all layouts start at 0, 0
+    #except RelativeLayout
+    #RelativeLayout moves its origin
+    #RelativeLayout:
+        #canvas.before called before button
+        #.after called after button(default)
+        #canvas.before:
+            #rectangle displayed ontop of button
+            #Rectangle:
+        #text: "A"
+        #only relocates button
+        #pos: 100, 100
+    BoxLayout:
+        #root refers to the class
+        size: root.size
+        Widget:
+            canvas:
+                Color:
+                    rgba: 0, 1, 0, 0.5
+                Rectangle:
+                    #self refers to the widget
+                    size: self.size
+        #showed ontop of previous widget
+        #Relative layout positions itself relative to others
+        RelativeLayout:
+            canvas:
+                Color:
+                    rgba: 0, 0, 1, 0.5
+                Rectangle:
+                    #self refers to the widget
+                    size: self.size
+
+
+
+#Define variables
+#:set s dp(150)
+
+<CanvasExample1>:
+    canvas:
+        Rectangle:
+            #self.center references the bottom left corner of shape
+            pos: self.center_x - s/2, self.center_y - s/2
+            size: s, s
+        Ellipse:
+            pos: 200, 500
+            size: s, s/2
+        Line:
+        #2 points of (x,y,x2,y2...)
+            points: (0,0,100,100, 200, 0, self.width, 100)
+            #width is line thickness
+            width: 2
+
+<CanvasExample2@Widget>:
+    canvas:
+        Line:
+            points: (0, self.height/2, self.width, self.height/2)
+            width: 3
+        Line:
+            points: (self.width/2, 0, self.width/2, self.height)
+            width: 3
+
+<CanvasExample3@Widget>:
+    canvas:
+        Color:
+            rgba: 1, 0, 0, 0.6 #percentage 60% visible
+        Line:
+            circle: (200, 200, 100) #center_x, center_y, radius
+            width: 2
+        Line:
+            ellipse: (200, 200, 100, 50) #center_x, center_y, radius_x, radius_y
+            width: 2
+        Color:
+            rgba: 0, 1, 0, 1
+        Line:
+            rectangle: (500, 300, 200, 300) #x,y,w,h
+            width: 2
+
+<CanvasExample4>:
+    Button:
+        pos: 100, 400
+        text: "A"
+        on_press: root.on_button_a_click()
+<ImageExample@GridLayout>:
+    cols: 3
+    Image:
+        #Image size automatically fixed
+        source: "RESOURCES_KIVY/1_THE_LAB/RESOURCES/images/cake.jpg"
+        #Unfixes image
+        allow_stretch: True
+    Image:
+        source: "RESOURCES_KIVY/1_THE_LAB/RESOURCES/images/cake.jpg"
+        #True on default, can only be used with allow_stretch
+        keep_ratio: False
+    Image:
+        source: "RESOURCES_KIVY/1_THE_LAB/RESOURCES/images/cake.jpg"
+
+<WidgetsExample>:
+    cols: 3
+    ToggleButton:
+        text: "OFF"
+        #Passes in self as the argument for widget
+        on_state: root.on_toggle_button_state(self)
+        size_hint: None, 1
+        width: "100dp"
+    Button:
+        text: "Count"
+        on_press: root.on_button_click()
+        #True means you can't click on the button
+        disabled: not root.count
+    Label:
+        text: root.my_text
+        font_name: "RESOURCES_KIVY/1_THE_LAB/RESOURCES/fonts/Lcd.ttf"
+        font_size: "80dp"
+        color: 1, 0.5, 1, 1
+    Switch:
+        id: my_switch
+        on_active: root.on_switch_active(self)
+        #columns need to have the same dimensions
+        size_hint: None, 1
+        width: "100dp"
+        active: True
+    Slider:
+        #saves value of slider
+        id: my_slider
+        min: 0
+        max: 100
+        #Starting value for slider
+        value: 50
+        #on_value: root.on_slider_value(self)
+        #orientation: "vertical"
+        disabled: not my_switch.active
+    BoxLayout:
+        Label:
+            #text: root.slider_value_txt
+            text: str(int(my_slider.value))
+        ProgressBar:
+            #min is always 0
+            max: 100
+            value: my_slider.value
+    TextInput:
+        id: my_text_input
+        size_hint: None, 1
+        width: "100dp"
+        text: "Hi"
+        multiline: False
+        on_text_validate: root.on_text_validate(self)
+    Label:
+        text: "You name is " + root.text_input_str
+<PageLayoutExample@PageLayout>:
+    MainWidget:
+    BoxLayoutExample:
+    AnchorLayoutExample:
+    GridLayoutExample:
+
+
+<ScrollViewExample@ScrollView>:
+    StackLayoutExample:
+        #Scroll Vertically
+        size_hint: 1, None
+        #Build in value that corresponds
+        #to actual height of contents
+        height: self.minimum_height
+
+<StackLayoutExample>:
+    #left-right, top-bottom: default
+    #orientation: "lr-bt"
+    #Internal spacing
+    #left, top, right, bottom
+    #padding: ("20dp","20dp","20dp","20dp")
+    #horizontally, vertically
+    #spacing: "20dp", "20dp"
+
+<GridLayoutExample@GridLayout>:
+    #rows
+    #cols
+    cols: 3
+    rows: 2
+    Button:
+        text: "A"
+        #Only work if button on same column has same size
+        size_hint: 0.5, 1
+    BoxLayoutExample:
+    Button:
+        text: "C"
+    Button:
+        text: "D"
+        #Relative to screen width and height
+        size_hint: 0.5, 1
+    Button:
+        text: "E"
+    Button:
+        text: "F"
+
+<AnchorLayoutExample>:
+    #right, left, center
+    anchor_x: "left"
+    #bottom, top, center
+    anchor_y: "top"
+    BoxLayout:
+        size_hint: 0.1, 0.1
+        Button:
+            text: "A"
+        Button:
+            text: "B"
+
+<BoxLayoutExample>:
+    orientation: "vertical"
+    Button:
+        text: "A"
+        #size_hint: .8, .5
+        #Set button to default size
+        size_hint: 0.5, None
+
+        #These are fixed dimensions
+        #width: "100dp"
+        height: "60dp"
+
+        #References, same logic for horizontal orientation
+        # x, center_x, right
+        # y, center_y, top
+        pos_hint: {"right": 1}
+
+    BoxLayout:
+        orientation: "horizontal"
+        spacing: "10dp"
+        Button:
+            text: "B1"
+        Button:
+            text: "B2"
+        Button:
+            text: "B3"
+        Button:
+            text: "B4"
+    Label:
+        text: "C"
+
+
+<MainWidget>:
+    Button:
+        text: "Hello"
+        size: "100dp", "80dp"
+        pos: "100dp", "200dp"
+        color: 0, 0, 1, 0.5
+    Label:
+        text: "Hello2"
+        size: "150dp", "80dp"
+        pos: "200dp", "300dp"
+        color: 1, 0, 0, 1
