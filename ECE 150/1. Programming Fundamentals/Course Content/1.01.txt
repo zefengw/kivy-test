@@ -1,0 +1,12 @@
+        External Storage
+            ^
+            |
+Input -> Processor -> output
+            |
+            v
+            Devices
+
+1. Program Code
+2. Compiler
+3. Linker (combines all programs into one)
+4. Executable Program
