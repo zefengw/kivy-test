@@ -1,8 +1,0 @@
-Declare a function before implementing:
-int f(int a, int b);
-...
-int f(int a, int b) {
-    ...
-}
-
-namespace - a collection of functions (e.g. std)
